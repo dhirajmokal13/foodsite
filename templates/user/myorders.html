@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+{% block title %}Business panels{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Show Orders</h2>
+{% for data in orders %}
+<div class="card my-3 crd">
+    <div class="card-header">
+      {{data.pname}} (Sold By: <span class="text-danger">{{data.buname}}</span>)
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><div class="container">
+        <div class="row">
+          <div class="col">
+            Total Amount: <span class="text-success">{{data.total_amount}}</span>
+          </div>
+          <div class="col">
+            No of Weeks: <span class="text-success">{{data.no_weeks}}</span>
+          </div>
+          <div class="col">
+            Address: <span class="text-success">{{data.address}}
+          </div>
+        </div>
+      </div></h5>
+      <p class="card-text">Validity: From <span class="text-success">{{data.date}}</span> To <span class="text-success">{{data.p_end}}</span></p>
+    </div>
+  </div>
+{% endfor %}
+{% comment %} body end here {% endcomment %}
+{% endblock body%}

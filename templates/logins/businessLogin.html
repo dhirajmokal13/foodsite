@@ -1,0 +1,21 @@
+{% extends 'base.html' %} 
+{% block title %}Business Login{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Business Login</h2>
+<form action="/businessLogin" method="post">
+{% csrf_token %}
+  <div class="mb-3">
+    <label for="username" class="form-label">Business Username</label>
+    <input type="text" class="form-control" id="username" name="uname" placeholder="Enter the username" required/>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Business Password</label>
+    <input type="password" class="form-control" id="password" name="password" placeholder="Enter the password" autocomplete="current-password" required/>
+  </div>
+  <button type="submit" class="btn btn-outline-primary" name="bjnlgn" value="true">Submit</button>
+  <button type="reset" class="btn btn-outline-primary">Reset</button>
+</form>
+<div class="pt-3"><a href="/businesssignup" >Create New Account</a></div>
+{% comment %} body end here {% endcomment %}
+{% endblock body%}

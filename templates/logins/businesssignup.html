@@ -1,0 +1,42 @@
+{% extends 'base.html' %} 
+{% block title %}Create Business Account{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Create Business Account</h2>
+{% comment %} signup form start here {% endcomment %}
+<form action="/businesssignup" method="post">
+{% csrf_token %}
+  <div class="mb-3">
+    <label for="boname" class="form-label">Business Owner Name</label>
+    <input type="text" class="form-control" id="boname" name="boname" placeholder="Enter The Business owner name" required/>
+  </div>
+  <div class="mb-3">
+    <label for="bname" class="form-label">Business Name</label>
+    <input type="text" class="form-control" id="bname" name="bname" placeholder="Enter the Business name" required/>
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Business Email</label>
+    <input type="email" class="form-control" id="bemail" name="bemail" placeholder="Enter the Business Email" required/>
+  </div>
+  <div class="mb-3">
+    <label for="baddr" class="form-label">Business Address</label>
+    <input type="text" class="form-control" id="baddr" name="baddr" placeholder="Enter the Business Address" required/>
+  </div>
+  <div class="mb-3">
+    <label for="buname" class="form-label">Business Username</label>
+    <input type="text" class="form-control" id="buname" name="buname" placeholder="Enter the Business Username" required/>
+  </div>
+  <div class="mb-3">
+    <label for="bpwd" class="form-label">Business Password</label>
+    <input type="password" class="form-control" id="bpwd" name="bpwd" placeholder="Enter the Business Password" required/>
+  </div>
+  <div class="mb-3">
+    <label for="cbpwd" class="form-label">Confirm Business Password</label>
+    <input type="password" class="form-control" id="cbpwd" name="cbpwd" placeholder="Confirm Business Password" required/>
+  </div>
+  <button type="submit" class="btn btn-outline-success" name="bjnsignup" value="true">Submit</button>
+  <button type="reset" class="btn btn-outline-success">Reset</button>
+</form>
+{% comment %} signup form end here {% endcomment %}
+{% comment %} body end here {% endcomment %}
+{% endblock body%}

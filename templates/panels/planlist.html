@@ -1,0 +1,137 @@
+{% extends 'base.html' %} 
+{% block title %}Plan Lists{% endblock title %}
+{% load post_tags %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Plans List</h2>
+{% comment %} list start here {% endcomment %}
+{% for i in food_plans %}
+  {% rmsp i.sunday_meal as sun %}
+  {% rmsp i.monday_meal as mon %}
+  {% rmsp i.tuesday_meal as tue %}
+  {% rmsp i.wednesday_meal as wed %}
+  {% rmsp i.thursday_meal as thu %}
+  {% rmsp i.friday_meal as fri %}
+  {% rmsp i.saturday_meal as sat %}
+  <div class="card my-3 crd">
+  <div class="card-header">
+    <bold>Plan</bold>: {{i.pname}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title mb-2"><div class="container">
+  <div class="row">
+    <div class="col">
+      Sold By: {{i.buname}}
+    </div>
+    <div class="col">
+      Food Type: {{i.mealtype}}
+    </div>
+    <div class="col">
+      Price Per Week: {{i.cpweek}}
+    </div>
+  </div>
+</div></h5>
+<hr>
+    <p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      Sunday Breakfast: {{sun.0}}
+    </div>
+    <div class="col">
+      Sunday Lunch: {{sun.1}}
+    </div>
+    <div class="col">
+      Sunday Dinner: {{sun.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      Monday Breakfast: {{mon.0}}
+    </div>
+    <div class="col">
+      Monday Lunch: {{mon.1}}
+    </div>
+    <div class="col">
+      Monday Dinner: {{mon.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      Tuesday Breakfast: {{tue.0}}
+    </div>
+    <div class="col">
+      Tuesday Lunch: {{tue.1}}
+    </div>
+    <div class="col">
+      Tuesday Dinner: {{tue.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      Wednesday Breakfast: {{wed.0}}
+    </div>
+    <div class="col">
+      Wednesday Lunch: {{wed.1}}
+    </div>
+    <div class="col">
+      Wednesday Dinner: {{wed.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      Thursday Breakfast: {{thu.0}}
+    </div>
+    <div class="col">
+      Thursday Lunch: {{thu.1}}
+    </div>
+    <div class="col">
+      Thursday Dinner: {{thu.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      Friday Breakfast: {{fri.0}}
+    </div>
+    <div class="col">
+      Friday Lunch: {{fri.1}}
+    </div>
+    <div class="col">
+      Friday Dinner: {{fri.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      Saturday Breakfast: {{sat.0}}
+    </div>
+    <div class="col">
+      Saturday Lunch: {{sat.1}}
+    </div>
+    <div class="col">
+      Saturday Dinner: {{sat.2}}
+    </div>
+  </div>
+</div></p>
+<hr>
+    <a href="/delplan/{{i.id}}" class="btn btn-outline-danger">Remove Plan</a>
+    <a href="/updateplan/{{i.id}}" class="btn btn-outline-success">Edit Plan</a>
+  </div>
+</div>
+  {% comment %} sunday lunch: {{ sun|slice:2 }}<br> {% endcomment %}
+  {% comment %} sunday dinner: {{ sun|slice:3 }}<br> {% endcomment %}
+{% endfor %}
+{% comment %} {{'ft:gh:hj'|split:":"}} {% endcomment %}
+{% comment %} lists end here {% endcomment %}
+{% comment %} body end here {% endcomment %}
+{% endblock body%}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %} 
+{% block title %}Business panels{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Show Orders</h2>
+{% comment %} body end here {% endcomment %}
+{% for data in orders %}
+<div class="card my-3 crd">
+    <h6 class="card-header">{{data.name}} <span class="text-success">({{data.uname}})</span></h6>
+    <div class="card-body">
+      <h5 class="card-title"><div class="container">
+        <div class="row">
+          <div class="col">
+            Plan Name: <span class="text-primary">{{data.pname}}</span>
+          </div>
+          <div class="col">
+            From: <span class="text-primary">{{data.date}}</span> To: <span class="text-primary">{{data.p_end}}</span>
+          </div>
+          <div class="col">
+            Total Amount: <span class="text-primary">{{data.total_amount}}</span>
+          </div>
+        </div>
+      </div></h5>
+      <p class="card-text"><div class="container">
+        <div class="row">
+          <div class="col">
+            Address: <span class="text-primary">{{data.address}}</span>
+          </div>
+          <div class="col">
+            No of weeks: <span class="text-primary">{{data.no_weeks}}</span>
+          </div>
+          <div class="col">
+            Sold By <span class="text-danger">{{data.buname}}</span>
+          </div>
+        </div>
+      </div></p>
+    </div>
+</div>
+{% endfor %}
+{% endblock body%}

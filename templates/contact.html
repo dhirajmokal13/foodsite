@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+{% block title %}Contact{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Contact Page</h2>
+<form action="/contact" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="cname" class="form-label">Name</label>
+      <input type="text" class="form-control" name="cname" id="cname" aria-describedby="nameHelp" placeholder="Enter the name" required/>
+    </div>
+    <div class="mb-3">
+      <label for="mnumber" class="form-label">Mobile Number</label>
+      <input type="tel" class="form-control" name="mnumber" id="mnumber" placeholder="Enter the Mobile Number" required/>
+    </div>
+    <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea class="form-control" name="comment" id="comment" rows="3" placeholder="Enter the Comment" required/></textarea>
+      </div>
+    <button type="submit" class="btn btn-outline-success">Submit</button>
+    <button type="Reset" class="btn btn-outline-success">Reset</button>
+  </form>
+{% comment %} body end here {% endcomment %}
+{% endblock body%}
