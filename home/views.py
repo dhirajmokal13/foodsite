@@ -1,13 +1,19 @@
-from numpy import ogrid
+from dataclasses import fields
+from dbm import dumb
+from reportlab.pdfgen import canvas
 import razorpay
 from click import password_option
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import datetime, date, timedelta
+from requests import request
 from home.models import Contact, userlogin, businesslogin, addplanfood, bookplane, paymentz
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+from django.http import JsonResponse
+import json
 
 # Create your views here.
 
@@ -46,6 +52,47 @@ def index(request):
     return render(request, 'index.html', data)
 
 
+@csrf_exempt
+def payment_details_admin(request):
+    oid = request.POST.get('oid')
+    data = paymentz.objects.filter(oid=oid).values()
+    return JsonResponse({'data':list(data)})
+
+
+@csrf_exempt
+def site_search(request):
+    dat = request.POST.get('data')
+    data = addplanfood.objects.filter(Q(pname__icontains=dat) | Q(
+        mealtype__icontains=dat) | Q(buname__icontains=dat)).values()
+    return JsonResponse({"data_d": list(data)})
+
+
+def download_invoice(request, id):
+    if request.session.get('userlogin') != True:
+        return redirect(userLogin)
+    p_status = "Unpaid"
+    pldata = bookplane.objects.get(id=id)
+    pdata = paymentz.objects.get(oid=pldata.id)
+    if pdata.paid == True:
+        p_status = "paid"
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="invoice {pldata.name}.pdf"'
+    h = canvas.Canvas(response)
+    h.setFont("Times-Roman", 20)
+    h.drawString(250, 800, "Invoice")
+    h.drawString(
+        50, 750, f"Order Id: {pdata.order_id}, (Payment Status: {p_status})")
+    h.drawString(50, 700, f"Name: {pldata.name}")
+    h.drawString(50, 650, f"Plane Name: {pldata.pname}")
+    h.drawString(50, 600, f"Address: {pldata.address}")
+    h.drawString(50, 550, f"Start: {pldata.date} To End: {pldata.p_end}")
+    h.drawString(
+        50, 500, f"Total Cost: {pldata.total_amount/pldata.no_weeks} x {pldata.no_weeks} = {pldata.total_amount}")
+    h.showPage()
+    h.save()
+    return response
+
+
 def bookplan(request, id):
     if request.session.get('userlogin') != True:
         return redirect(userLogin)
@@ -71,7 +118,7 @@ def bookplan(request, id):
         result = bookplane(name=name, uname=uname, buname=buname, pid=id, pname=pname, p_end=p_end, address=addr, no_weeks=no_week,
                            total_amount=total_amount, date=datetime.today())
         result.save()
-        global oid 
+        global oid
         oid = result.id
         return redirect(checkout)
     return render(request, 'user/bookplan.html', data)
@@ -79,6 +126,8 @@ def bookplan(request, id):
 
 @csrf_exempt
 def payment_status(request):
+    if request.session.get('userlogin') != True:
+        return redirect(userLogin)
     res = request.POST
     status = None
     client = razorpay.Client(
@@ -93,16 +142,18 @@ def payment_status(request):
         status = False
     data = {
         'session': request.session,
-        'status':status,
+        'status': status,
     }
     return render(request, 'payments/payment-status.html', data)
 
 
 def checkout(request):
+    if request.session.get('userlogin') != True:
+        return redirect(userLogin)
     # payment gateway start here
     order = bookplane.objects.get(id=oid)
     user = userlogin.objects.get(username=order.uname)
-    order_amount = "200"  # order.total_amount * 100
+    order_amount =   order.total_amount * 100 # razorpay payment amount
     order_currency = 'INR'
     try:
         client = razorpay.Client(
@@ -114,7 +165,8 @@ def checkout(request):
     order_id = payment['id']
     order_status = payment['status']
     if order_status == 'created':
-        result = paymentz(oid=oid, amount=int(order_amount)/100, order_id=order_id)
+        result = paymentz(oid=oid, amount=int(
+            order_amount)/100, order_id=order_id)
         result.save()
         # payment gateway end here
         data = {

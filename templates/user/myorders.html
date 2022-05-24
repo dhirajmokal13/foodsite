@@ -6,7 +6,7 @@
 {% for data in orders %}
 <div class="card my-3 crd">
     <div class="card-header">
-      {{data.pname}} (Sold By: <span class="text-danger">{{data.buname}}</span>)
+      {{data.pname}} (Sold By: <span class="text-danger">{{data.buname}}</span>) <a href="download-invoice/{{data.id}}" class="ms-5 btn btn-outline-success">Download Invoice</a>
     </div>
     <div class="card-body">
       <h5 class="card-title"><div class="container">

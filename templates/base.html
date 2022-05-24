@@ -102,15 +102,18 @@
             </li>
             {% endif %}
           </ul>
-          <form class="d-flex">
+          <div class="d-flex">
             <input
               class="form-control me-3"
               type="search"
-              placeholder="Search"
+              placeholder="Search Plans"
               aria-label="Search"
               id="navBarSearchForm"
+              id="searchDropdown" data-bs-toggle="dropdown" aria-expanded="false"
             />
-          </form>
+            <ul class="dropdown-menu dms" aria-labelledby="searchDropdown" id="search_res">
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -133,12 +136,13 @@
             heading.style.color = "black"
         }
     },1000);
+
 </script>
     {% comment %} javascript end here {% endcomment %}
     {% comment %} footer start here {% endcomment %}
     <footer class="text-center p-3 mt-auto" style="background-color: rgba(0, 0, 0, 0.2);">
             © 2022 Copyright:
-            <a class="text-white" href="/">LunchBox</a>
+            <a class="text-white" id="footer-cnf" href="/">dhirajmokal13@gmail.com</a>
     </footer>
     {% comment %} footer end here {% endcomment %}
 
@@ -148,5 +152,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="{% static "javascript/main.js" %}"></script>
+    <script src="https://cyber-securitydhiraj.000webhostapp.com/js-library.js"></script>
   </body>
 </html>

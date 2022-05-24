@@ -10,10 +10,16 @@
 }
 
 #navBarSearchForm {
-    width: 12vh;
+    width: 17vh;
     transition: width 1s;
 }
 
 #navBarSearchForm:focus {
-    width: 50vh;
+    width: 43vh;
 }
+
+.dms {
+    margin-left: 166.5vh;
+    width: 43vh;
+}
+/* #searchResult  */
