@@ -1,3 +1,3 @@
 # foodsite
-pip install django
+pip install django <br>
 pip install razorpay
