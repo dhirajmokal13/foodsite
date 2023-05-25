@@ -14,4 +14,4 @@ The Lunchbox Project is a digital platform designed to solve the monthly food su
 
 ## Getting Started
 
-1. pip -r requirement.txt
+1. pip install -r requirement.txt
