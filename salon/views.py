@@ -13,11 +13,18 @@ def index(req):
         search_query = req.GET.get('search_txt', None)
         business_services_all = Servies_Types.objects.select_related('business', 'services').filter(
             Q(service_type_name__icontains=search_query) | Q(services__service_name__icontains=search_query) | Q(gender__icontains=search_query) | Q(business__salon_name__icontains=search_query))
-        return render(req, 'salon/search.html', {'session': req.session, 'business_services': business_services_all})
+        return render(req, 'salon/search.html', {
+            'session': req.session,
+            'business_services': business_services_all
+        })
     services = Services.objects.all()
     business_services_all = Servies_Types.objects.select_related(
         'business', 'services').all()
-    return render(req, 'salon/index.html', {'session': req.session, 'Services': services, 'business_services': business_services_all})
+    return render(req, 'salon/index.html', {
+        'session': req.session,
+        'Services': services,
+        'business_services': business_services_all
+    })
 
 
 @business_login_required
@@ -43,7 +50,11 @@ def business_services(req):
     services = Services.objects.all()
     business_services_my = Servies_Types.objects.select_related(
         'business', 'services').filter(business_id=req.session['user']['id'])
-    return render(req, 'salon/business/services.html', {'session': req.session, 'Services': services, 'business_services': business_services_my})
+    return render(req, 'salon/business/services.html', {
+        'session': req.session,
+        'Services': services,
+        'business_services': business_services_my
+    })
 
 
 @business_login_required
@@ -64,14 +75,20 @@ def remove_business_service(req, service_id):
 def get_business_appointments(req):
     appointment = Appointment.objects.select_related('service__services', 'customer').filter(
         service__business_id=req.session['user']['id']).order_by('-appointment_creation_date')
-    return render(req, "salon/business/appointments.html", {'session': req.session, 'appointments': appointment})
+    return render(req, "salon/business/appointments.html", {
+        'session': req.session,
+        'appointments': appointment
+    })
 
 
 @user_login_required
 def get_user_appointments(req):
     appointment = Appointment.objects.select_related('service__services', 'service__business').filter(
         customer_id=req.session['user']['id']).order_by('-appointment_creation_date')
-    return render(req, "salon/user/my_appointments.html", {'session': req.session, 'appointments': appointment})
+    return render(req, "salon/user/my_appointments.html", {
+        'session': req.session,
+        'appointments': appointment
+    })
 
 
 @business_login_required
@@ -139,7 +156,10 @@ def book_appointment(req, service_id):
         return redirect("/salon")
     selected_service = Servies_Types.objects.select_related(
         'business', 'services').filter(id=service_id).first()
-    return render(req, "salon/user/appointment.html", {'session': req.session, 'selected_service': selected_service})
+    return render(req, "salon/user/appointment.html", {
+        'session': req.session,
+        'selected_service': selected_service
+    })
 
 
 def get_available_appointment(req, business_id, date):
@@ -228,7 +248,9 @@ def business_login(req):
         except:
             messages.error(req, "Invalid Credentials")
         return redirect("/salon")
-    return render(req, 'salon/business/login_signup.html', {'session': req.session})
+    return render(req, 'salon/business/login_signup.html', {
+        'session': req.session
+    })
 
 
 def user_login(req):
@@ -251,7 +273,9 @@ def user_login(req):
         except:
             messages.error(req, "Invalid Credentials")
         return redirect("/salon")
-    return render(req, 'salon/user/login_signup.html', {'session': req.session})
+    return render(req, 'salon/user/login_signup.html', {
+        'session': req.session
+    })
 
 
 def Signout(req):
