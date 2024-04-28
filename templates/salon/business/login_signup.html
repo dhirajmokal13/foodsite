@@ -1,0 +1,110 @@
+{% extends 'salon/salonbase.html' %} {% block title %}Login{% endblock title %}
+{% block body %}
+<div class="container border mt-5 p-3 rounded-2 w-50">
+  <h4 class="text-center mb-3 mt-2">Salon Login/Signup</h4>
+  <nav >
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button
+        class="nav-link active"
+        id="nav-login-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#nav-login"
+        type="button"
+        role="tab"
+        aria-controls="nav-login"
+        aria-selected="true"
+      >
+        Login
+      </button>
+      <button
+        class="nav-link"
+        id="nav-signup-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#nav-signup"
+        type="button"
+        role="tab"
+        aria-controls="nav-signup"
+        aria-selected="false"
+      >
+        Create Account
+      </button>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="nav-login"
+      role="tabpanel"
+      aria-labelledby="nav-login-tab"
+      tabindex="0"
+    >
+
+      <div class="container">
+        <form action="{% url 'business_login' %}" method="POST">
+          {% csrf_token %}  
+          <div class="mb-3 mt-3">
+            <label for="business_email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="business_email" name="email" placeholder="Business Email" required/>
+          </div>
+          <div class="mb-3">
+            <label for="business_password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="business_password" name="password" placeholder="Business Password" required/>
+          </div>
+          <button type="submit" class="btn btn-outline-primary" name="business_login" value="True">Login</button>
+        </form>
+      </div>
+
+    </div>
+    <div
+      class="tab-pane fade"
+      id="nav-signup"
+      role="tabpanel"
+      aria-labelledby="nav-signup-tab"
+      tabindex="0"
+    >
+     
+    <div class="container">
+      <form action="{% url 'business_register' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+          <label for="owner_name" class="form-label">Owner Name</label>
+          <input type="text" class="form-control" id="owner_name" name="owner" placeholder="Owner Name" required/>
+        </div>       
+        <div class="mb-3 mt-3">
+          <label for="business_name" class="form-label">Salon Name</label>
+          <input type="text" class="form-control" id="business_name" name="name" placeholder="Business Name" required/>
+        </div>
+        <div class="mb-3">
+          <label for="business_email_s" class="form-label">Salon Email address</label>
+          <input type="email" class="form-control" id="business_email_s" name="email" placeholder="Business Email" required/>
+        </div>
+        <div class="mb-3">
+          <label for="business_address" class="form-label">Salon Address</label>
+          <input type="text" class="form-control" id="business_address" name="address" placeholder="Business Address" required/>
+        </div>
+        <div class="mb-3">
+          <label for="profilePic" class="form-label">Salon Profile</label>
+          <input class="form-control" type="file" id="profilePic" name="profile" accept="image/*" required/>
+        </div>
+        <div class="mb-3 row">
+          <div class="col-auto">
+            <label for="open_time" class="form-label">Open Time</label>
+            <input class="form-control" type="time" id="open_time" name="open_time" required/>
+          </div>
+          <div class="col-auto">
+            <label for="close_time" class="form-label">Close Time</label>
+            <input class="form-control" type="time" id="close_time" name="close_time" required/>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="business_password_s" class="form-label">Password</label>
+          <input type="password" class="form-control" id="business_password_s" name="password" placeholder="Business Password" required/>
+        </div>
+        <button type="submit" class="btn btn-outline-primary" name="businessSignup" value="True">Create</button>
+      </form>
+    </div>
+  
+    </div>
+  </div>
+</div>
+{% endblock body%}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block title %}Payment{% endblock title %} {% load
+post_tags %} {% block body %} {% comment %} body start here {% endcomment %}
+<style>
+    .mt-5 {
+        margin-top: 13rem!important;
+    }
+</style>
+<div class="container-fluid text-center">
+    <h2 class="mt-5 mb-4 text-center">Make Payment</h2>
+    {% if payment %}
+    <form action="/payment-status" method="POST">
+        {% csrf_token %}
+        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_V8dibsyOXL32Hd" data-amount="{{payment.amount}}"
+            data-currency="{{payment.currency}}" data-order_id="{{payment.id}}" data-buttontext="Make Payment" data-name="LunchBox"
+            data-description="This is food site to order foods" data-image="xyz.png" data-prefill.name="{{name}}"
+            data-prefill.email="dhirajmokal13@gmail.com" data-button_text="Buy Now"
+            data-prefill.color="#F37254"></script>
+        <script>
+            const btn = document.getElementsByClassName("razorpay-payment-button")[0];
+            const cls = ["text-center","btn","btn-outline-success"];
+            for (i = 0; i < cls.length; i++) {
+                btn.classList.add(cls[i]);
+            }
+        </script>
+    </form>
+    {% endif %}
+</div>
+{% comment %} body end here {% endcomment %} {% endblock body %}

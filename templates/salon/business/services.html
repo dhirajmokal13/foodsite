@@ -1,0 +1,76 @@
+{% extends 'salon/salonbase.html' %} 
+{% load static %}
+{% block title %}{{session.user.salon_name}} - Services{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="container w-50">
+        <h2 class="text-center mt-4">Add Service</h2>
+        <form action="{% url 'business_services' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}  
+            <div class="my-3">
+                <label for="service_name" class="form-label">Service Name</label>
+                <input type="text" class="form-control" id="service_name" name="service_name" placeholder="Service Name" required/>
+            </div>
+            <div class="my-3">
+                <label for="service_cost" class="form-label">Cost</label>
+                <input type="number" class="form-control" id="service_cost" name="service_cost" placeholder="Service Cost" required/>
+            </div>
+            <div class="my-3 input-group">
+                <label for="gender" class="input-group-text">Gender</label>
+                <select name="gender" class="form-select" id="gender" aria-label="Targeted Gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+            <div class="input-group my-3">
+                <label for="service" class="input-group-text">Service</label>
+                <select name="service_id" class="form-select" id="service" aria-label="Service">
+                    {% for service in Services %}
+                        <option value="{{service.id}}">{{service.service_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="my-3">
+                <label for="service_image" class="form-label">Service Image</label>
+                <input class="form-control" type="file" id="service_image" name="service_image" accept="image/*" required/>
+            </div>
+            <div class="my-3">
+                <label for="service_desc" class="form-label">Example textarea</label>
+                <textarea class="form-control" id="service_desc" name="service_desc" placeholder="Enter The Service Description" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-success" name="service_add" value="True">Add</button>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center mt-4">My Services</h2>
+        <div class="row">
+            {% for services in business_services %}
+                <div class="col my-3">
+                    <div class="card position-relative" style="width: 18rem;">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{services.services.service_name}}
+                            <span class="visually-hidden">Service Type</span>
+                          </span>
+                        <img src="/media/{{services.service_image}}" class="card-img-top service-image" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">{{services.service_type_name}} <span class="text-info-emphasis">({{services.gender}})</span></h5>
+                          <p class="card-text"><span class="text-success">Cost:</span> {{services.service_cost}}</p>
+                          <p class="card-text"><span class="text-success">Description:</span> {{services.description}}</p>
+                        </div>
+                        <div class="card-footer py-2">
+                            <a href="{% url 'remove_business_service' service_id=services.id %}" class="btn btn-outline-danger">Remove</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <style>
+                .service-image {
+                    height: 200px;
+                }
+            </style>
+        </div>
+    </div>
+</div>
+{% endblock body%}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %} 
+{% block title %}Business panels{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Show Orders</h2>
+{% comment %} body end here {% endcomment %}
+{% for data in orders %}
+<div class="card my-3 crd">
+    <h6 class="card-header">{{data.name}} <span class="text-success">({{data.uname}})</span> <span class="text-primary payment_info_show" role="button" data-id="{{data.id}}"  data-bs-toggle="modal" data-bs-target="#payment_info">Payment Details</span></h6>
+    <div class="card-body">
+      <h5 class="card-title"><div class="container">
+        <div class="row">
+          <div class="col">
+            Plan Name: <span class="text-primary">{{data.pname}}</span>
+          </div>
+          <div class="col">
+            From: <span class="text-primary">{{data.date}}</span> To: <span class="text-primary">{{data.p_end}}</span>
+          </div>
+          <div class="col">
+            Total Amount: <span class="text-primary">{{data.total_amount}}</span>
+          </div>
+        </div>
+      </div></h5>
+      <p class="card-text"><div class="container">
+        <div class="row">
+          <div class="col">
+            Address: <span class="text-primary">{{data.address}}</span>
+          </div>
+          <div class="col">
+            No of weeks: <span class="text-primary">{{data.no_weeks}}</span>
+          </div>
+          <div class="col">
+            Sold By <span class="text-danger">{{data.buname}}</span>
+          </div>
+        </div>
+      </div></p>
+    </div>
+</div>
+{% endfor %}
+{% comment %} Payment Details start here {% endcomment %}
+<div class="modal fade" id="payment_info" tabindex="-1" aria-labelledby="payment_infoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Payment Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div><span class="text-primary">Order Id<span> : <span class="text-success" id="pd_oi"></span></div>
+        <div><span class="text-primary">Razorpay Payment Id<span> : <span class="text-success" id="pd_rpid"></span></div>
+        <div><span class="text-primary">Order Amount<span> : <span class="text-success" id="pd_oa"></span></div>
+        <div><span class="text-primary">Payment Status<span> : <span class="text-success" id="pd_ps"></span></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% comment %} Payment Details end here {% endcomment %}
+{% endblock body%}

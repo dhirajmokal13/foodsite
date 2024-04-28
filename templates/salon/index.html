@@ -1,0 +1,51 @@
+{% extends 'salon/salonbase.html' %} 
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+<head>
+    <link href="{% static "css/salon.css" %}" rel="stylesheet">
+</head>
+<div class="salon_poster">
+    <h1 class="text-light">Welcome To Our Salon</h1>
+    <h1 class="text-dark-blue mt-3">We Style & You Smile Bright</h1>
+    <h2 class="text-danger mt-3">We Have Best salon Partner & Trusted</h2>
+</div>
+<div class="container my-5">
+    <h3 class="text-center text-success mb-3">Our Top Services</h3>
+    {% for services in Services %}
+        <div class="service-card mt-3 mb-4">
+            <img class="mt-3 mb-2" src="/media/{{services.service_icon}}"/>
+            <p class="text-center">{{services.service_name}}</p>
+        </div>
+    {% endfor %}
+    <h3 class="text-center text-success mb-3">Services</h3>
+    <div class="container">
+        <div class="row">
+            {% for services in business_services %}
+                <div class="col my-3">
+                    <div class="card position-relative" style="width: 18rem;">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{services.services.service_name}}
+                            <span class="visually-hidden">Service Type</span>
+                          </span>
+                        <img src="/media/{{services.service_image}}" class="card-img-top service-image" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">{{services.service_type_name}} <span class="text-info-emphasis">({{services.gender}})</span></h5>
+                          <p class="card-text"><span class="text-success">Offered By:</span> {{services.business.salon_name}}</p>
+                          <p class="card-text"><span class="text-success">Cost:</span> {{services.service_cost}}</p>
+                        </div>
+                        <div class="card-footer py-2">
+                            <a href="{% url 'book_appointment' service_id=services.id %}" class="btn btn-outline-primary">Select</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <style>
+                .service-image {
+                    height: 200px;
+                }
+            </style>
+        </div>
+      </div>
+</div>
+{% endblock body%}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %} 
+{% block title %}Booking Page{% endblock title %}
+{% load post_tags %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Book The Plan</h2>
+{% comment %} body end here {% endcomment %}
+{% comment %} plan start here {% endcomment %}
+{% for i in plan %}
+  {% rmsp i.sunday_meal as sun %}
+  {% rmsp i.monday_meal as mon %}
+  {% rmsp i.tuesday_meal as tue %}
+  {% rmsp i.wednesday_meal as wed %}
+  {% rmsp i.thursday_meal as thu %}
+  {% rmsp i.friday_meal as fri %}
+  {% rmsp i.saturday_meal as sat %}
+  <input type="hidden" value="{{i.cpweek}}" id="amount">
+  <div class="card my-3 crd">
+  <div class="card-header">
+    <bold>Plan</bold>: {{i.pname}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title mb-2"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-danger">Sold By:</span> {{i.buname}}
+    </div>
+    <div class="col">
+      <span class="text-danger">Food Type:</span> {{i.mealtype}}
+    </div>
+    <div class="col">
+      <span class="text-danger">Price Per Week:</span> {{i.cpweek}}
+    </div>
+  </div>
+</div></h5>
+<hr>
+    <p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-primary">Sunday Breakfast:</span> {{sun.0}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Sunday Lunch:</span> {{sun.1}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Sunday Dinner:</span> {{sun.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-primary">Monday Breakfast:</span> {{mon.0}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Monday Lunch:</span> {{mon.1}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Monday Dinner:</span> {{mon.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-primary">Tuesday Breakfast:</span> {{tue.0}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Tuesday Lunch:</span> {{tue.1}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Tuesday Dinner:</span> {{tue.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-primary">Wednesday Breakfast:</span> {{wed.0}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Wednesday Lunch:</span> {{wed.1}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Wednesday Dinner:</span> {{wed.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-primary">Thursday Breakfast:</span> {{thu.0}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Thursday Lunch:</span> {{thu.1}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Thursday Dinner:</span> {{thu.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-primary">Friday Breakfast:</span> {{fri.0}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Friday Lunch:</span> {{fri.1}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Friday Dinner:</span> {{fri.2}}
+    </div>
+  </div>
+</div></p>
+<p class="card-text"><div class="container">
+  <div class="row">
+    <div class="col">
+      <span class="text-primary">Saturday Breakfast:</span> {{sat.0}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Saturday Lunch:</span> {{sat.1}}
+    </div>
+    <div class="col">
+      <span class="text-primary">Saturday Dinner:</span> {{sat.2}}
+    </div>
+  </div>
+</div></p>
+  </div>
+</div>
+{% endfor %}
+<h4 class="mt-4 mb-3 text-center drk-heading">Confirm Booking</h4>
+<form action="/bookplan/{{id}}" method="post">
+{% csrf_token %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+    <label for="address" class="form-label drk-heading">Address</label>
+    <input type="text" class="form-control" value="{{session.address}}" name="address" id="address" placeholder="Please Enter the address" required/>
+    </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+    <label for="address" class="form-label drk-heading">No of Weeks</label>
+    <select id="nofw" name="nofw" class="form-control">
+    {% for i in nw %}
+    <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+    </select>
+    </div>
+    </div>
+    <div class="col">
+    <div class="mb-3">
+    <label for="total_amount" class="form-label drk-heading">Total Amount</label>
+    <input type="number" class="form-control" id="noa" disabled/>
+    </div>
+    </div>
+  </div>
+  <button type="submit" name="cnfbooking" value="true" class="btn btn-outline-primary">Submit</button>
+</div>
+</form>
+<script>
+let no_of_week = document.getElementById('nofw');
+let total_amount = document.getElementById('noa');
+let amount = document.getElementById('amount').value;
+noa.value = amount
+no_of_week.addEventListener('click',()=>{
+    noa.value = no_of_week.value * amount
+})
+</script>
+{% comment %} plan end here {% endcomment %}
+{% endblock body%}

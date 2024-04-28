@@ -1,0 +1,38 @@
+{% extends 'base.html' %} 
+{% block title %}User Signup{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">User Registration</h2>
+{% comment %} login form start here {% endcomment %}
+<form action="/usersignup" method="post">
+{% csrf_token %}
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name here" required/>
+  </div>
+  <div class="mb-3">
+    <label for="Mobile Number" class="form-label">Mobile Number</label>
+    <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Enter your mobile number here" required/>
+  </div>
+  <div class="mb-3">
+    <label for="addr" class="form-label">Address</label>
+    <input type="text" class="form-control" id="addr" name="addr" placeholder="Enter your Address here" required/>
+  </div>
+  <div class="mb-3">
+    <label for="user" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" name="username" placeholder="Create Username" required/>
+  </div>
+  <div class="mb-3">
+    <label for="pwd" class="form-label">Create Password</label>
+    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Create Password" autocomplete="off" required/>
+  </div>
+  <div class="mb-3">
+    <label for="cpwd" class="form-label">Confirm Password</label>
+    <input type="password" class="form-control" id="cpwd" name="cpwd" placeholder="Confirm Password" autocomplete="off" required/>
+  </div>
+  <button type="submit" name="userreg" value="true" class="btn btn-outline-primary">Submit</button>
+  <button type="reset" class="btn btn-outline-primary">Reset</button>
+</form>
+{% comment %} login form end here {% endcomment %}
+{% comment %} body end here {% endcomment %}
+{% endblock body%}

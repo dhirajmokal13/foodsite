@@ -1,0 +1,42 @@
+{% extends 'salon/salonbase.html' %} 
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+<head>
+    <link href="{% static "css/salon.css" %}" rel="stylesheet">
+</head>
+<div class="container my-5">
+    <h3 class="text-center text-success mb-3">Search Services</h3>
+    <div class="container">
+        {% if business_services|length == 0 %}
+            <h4 class="text-center text-danger">Result Not Found</h4>
+        {% endif %}
+        <div class="row">
+            {% for services in business_services %}
+                <div class="col my-3">
+                    <div class="card position-relative" style="width: 18rem;">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{services.services.service_name}}
+                            <span class="visually-hidden">Service Type</span>
+                          </span>
+                        <img src="/media/{{services.service_image}}" class="card-img-top service-image" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">{{services.service_type_name}} <span class="text-info-emphasis">({{services.gender}})</span></h5>
+                          <p class="card-text"><span class="text-success">Offered By:</span> {{services.business.salon_name}}</p>
+                          <p class="card-text"><span class="text-success">Cost:</span> {{services.service_cost}}</p>
+                        </div>
+                        <div class="card-footer py-2">
+                            <a href="{% url 'book_appointment' service_id=services.id %}" class="btn btn-outline-primary">Select</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <style>
+                .service-image {
+                    height: 200px;
+                }
+            </style>
+        </div>
+      </div>
+</div>
+{% endblock body %}

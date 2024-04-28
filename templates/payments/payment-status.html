@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block title %}Payment Status{% endblock title %} 
+{% block body %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+/>
+<style>
+  #icon-right {
+    font-size: 80px;
+    color: green;
+  }
+  #icon-wrong {
+    font-size: 80px;
+    color: #e71818;
+  }
+  #ma {
+    text-align: center;
+    margin: 14rem 0 0 0;
+  }
+  #stat {
+    display: block;
+    font-size: 1.6rem;
+    margin-top: 1rem;
+  }
+</style>
+<div class="container" id="ma">
+{% if status %}
+  <i class="fa-solid fa-circle-check" id="icon-right"></i>
+  <span id="stat">Payment Successfull</span>
+{% else %}
+<i class="fa-solid fa-circle-xmark" id="icon-wrong"></i>
+<span id="stat">Payment Failed</span>
+{% endif %}
+</div>
+{% endblock body %}

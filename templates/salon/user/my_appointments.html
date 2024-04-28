@@ -1,0 +1,95 @@
+{% extends 'salon/salonbase.html' %} 
+{% load static %}
+{% block title %}User Appointment - {{session.user.user_email}}{% endblock title %}
+{% block body %}
+<head>
+    <link href="{% static "css/appointment.css" %}" rel="stylesheet">
+</head>
+<div class="py-5 container">
+    {% for appoinment in appointments %}
+        <div class="card mb-4">
+            <div class="card-header">
+              <img src="/media/{{appoinment.service.business.salon_profile_pic}}" class="user-icon rounded mx-2"/>
+              Salon Name: <span class="text-body-tertiary ms-1 me-2">{{appoinment.service.business.salon_name}} ({{appoinment.service.business.salon_name}})</span>
+              Salon Email: <span class="text-body-tertiary ms-1 me-2">{{appoinment.service.business.salon_email}}</span>
+              Salon Address: <span class="text-body-tertiary ms-1 me-2">{{appoinment.service.business.salon_address}}</span>
+              Timing: <span class="text-body-tertiary ms-1 me-2">{{appoinment.service.business.open_time}} - {{appoinment.service.business.closing_time}}</span>
+            </div>
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="/media/{{appoinment.service.service_image}}" class="img-fluid rounded service-image">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                          <p>{{appoinment.service.service_type_name}} - {{appoinment.service.services.service_name}} ({{appoinment.service.gender}})</p>
+                          <footer class="blockquote-footer">Cost: <cite title="Source Title">{{appoinment.service.service_cost}}</cite></footer>
+                        </blockquote>
+                        <p class="card-text mt-2">Description: {{appoinment.service.description}}</p>
+                        <hr/>
+                        <div class="mt-3 mb-2">
+                            <p class="card-text d-inline">Appointment Status</p>
+                            {% if appoinment.appointment_status == 'pending' %} 
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#appoinmentCancellationForm" class="text-decoration-none text-danger ms-2" name="appointment_cancel" data-appoinment-id="{{appoinment.id}}">Cancel</a>
+                            {% endif %}
+                        </div>
+                        <div class="position-relative mx-5 my-4 w-50">
+                            <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 1px;">
+                              <div class="progress-bar {% if appoinment.appointment_status == 'completed' %}bg-success{% elif appoinment.appointment_status == 'cancel' %}bg-danger{% endif %}" style="width: {% if appoinment.appointment_status == 'pending' %}0%{% else %}100%{% endif %}"></div>
+                            </div>
+                            <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 5rem; height:2rem;">Created</button>
+                            {% if appoinment.appointment_status == 'completed' %}
+                                <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-success rounded-pill" style="width: 5rem; height:2rem;">completed</button>
+                            {% elif appoinment.appointment_status == 'cancel' %}
+                                <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-danger rounded-pill" style="width: 5rem; height:2rem;">Cancel</button>
+                            {% else %}
+                                <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 5rem; height:2rem;">Pending</button>
+                            {% endif %}
+                        </div>
+                        <div class="mt-3">
+                            <p class="mb-1 mt-2">Appointment: <span class="text-secondary">{{appoinment.appointment_creation_date}} ({{appoinment.appointment_start_time}} - {{appoinment.appointment_end_time}})</span></p>
+                           <p class="mb-1">Appointment Creation Date: <span class="text-secondary">{{appoinment.appointment_date}}</span></p>
+                           {% if appoinment.appointment_status == 'cancel' %}
+                              <p class="mb-1">Appointment Cancellation Reason: <span class="text-secondary">{{appoinment.appointment_cancellation_reason}}</span></p>
+                           {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="modal fade" id="appoinmentCancellationForm" tabindex="-1" aria-labelledby="appoinmentCancellationFormLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="appoinmentCancellationFormLabel">Appointment Cancellation</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'cancel_user_appointment' %}" method="POST">
+            {% csrf_token %}   
+              <input type="hidden" id="appointment_id" name="appointment_id" value=""/>
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="appointment_cancellation_reason" name="appointment_cancellation_reason" style="height: 100px" required/></textarea>
+                <label for="appointment_cancellation_reason">Appointment Cancellation Reason</label>
+              </div>
+              <button type="submit" class="btn btn-outline-danger mt-3" name="appointment_cancel_btn" value="True">Cancel Appointment</button>
+          </form>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+   document.getElementsByName('appointment_cancel').forEach(ele => {
+       ele.addEventListener("click", event =>{
+            document.getElementById("appointment_id").value = event.target.dataset.appoinmentId;
+       });
+   });
+</script>
+{% endblock body %}

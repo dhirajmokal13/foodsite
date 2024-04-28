@@ -1,0 +1,23 @@
+{% extends 'base.html' %} 
+{% block title %}User Login{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">User Login</h2>
+{% comment %} login from start here {% endcomment %}
+<form action="/userLogin" method="post">
+{% csrf_token %}
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" name="uname" placeholder="Enter the username" required/>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password" placeholder="Enter the password" autocomplete="current-password" required/>
+  </div>
+  <button type="submit" class="btn btn-outline-primary" name="usrlgn" value="true">Submit</button>
+  <button type="reset" class="btn btn-outline-primary">Reset</button>
+</form>
+{% comment %} login form end here {% endcomment %}
+<div class="pt-3"><a href="/usersignup" >Create New Account</a></div>
+{% comment %} body end here {% endcomment %}
+{% endblock body%}

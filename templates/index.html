@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+{% block title %}Home{% endblock title %}
+{% block body %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Book Foods By Exploring Plans</h2>
+{% comment %} body end here {% endcomment %}
+{% comment %} plans list start here {% endcomment %}
+{% for plans in plan %}
+<div class="card my-2 crd">
+  <h5 class="card-header">Plan Name: {{plans.pname}}</h5>
+  <div class="card-body">
+    <h5 class="card-title">
+    <div class="container">
+  <div class="row">
+    <div class="col">
+      Sold By: {{plans.buname}}
+    </div>
+    <div class="col">
+      Food Type: {{plans.mealtype}}
+    </div>
+    <div class="col">
+      Price Per Week: {{plans.cpweek}}
+    </div>
+  </div>
+</div>
+    </h5>
+    {% if session.userlogin ==  True %}
+    <a href="bookplan/{{plans.id}}" class="btn btn-outline-success my-2">Book Plan</a>
+    {% else %}
+        <a href="javascript:void(0)" title="Please Login As User" class="btn btn-outline-success my-2">Login for Book</a>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% comment %} plans list end here {% endcomment %}
+{% endblock body%}

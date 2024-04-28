@@ -1,0 +1,96 @@
+{% extends 'salon/salonbase.html' %} {% block title %}Login{% endblock title %}
+{% block body %}
+<div class="container border mt-5 p-3 rounded-2 w-50">
+  <h4 class="text-center mb-3 mt-2">User Login/Signup</h4>
+  <nav >
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button
+        class="nav-link active"
+        id="nav-login-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#nav-login"
+        type="button"
+        role="tab"
+        aria-controls="nav-login"
+        aria-selected="true"
+      >
+        Login
+      </button>
+      <button
+        class="nav-link"
+        id="nav-signup-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#nav-signup"
+        type="button"
+        role="tab"
+        aria-controls="nav-signup"
+        aria-selected="false"
+      >
+        Create Account
+      </button>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="nav-login"
+      role="tabpanel"
+      aria-labelledby="nav-login-tab"
+      tabindex="0"
+    >
+
+      <div class="container">
+        <form action="{% url 'user_login' %}" method="POST">
+          {% csrf_token %}  
+          <div class="mb-3 mt-3">
+            <label for="User_email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="User_email" name="email" placeholder="User Email" required/>
+          </div>
+          <div class="mb-3">
+            <label for="user_password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="user_password" name="password" placeholder="User Password" required/>
+          </div>
+          <button type="submit" class="btn btn-outline-primary" name="user_login" value="True">Login</button>
+        </form>
+      </div>
+
+    </div>
+    <div
+      class="tab-pane fade"
+      id="nav-signup"
+      role="tabpanel"
+      aria-labelledby="nav-signup-tab"
+      tabindex="0"
+    >
+     
+    <div class="container">
+      <form action="{% url 'user_register' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}       
+        <div class="mb-3 mt-3">
+          <label for="user_name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="user_name" name="name" placeholder="Name" required/>
+        </div>
+        <div class="mb-3">
+          <label for="user_email" class="form-label">User Email address</label>
+          <input type="email" class="form-control" id="user_email" name="email" placeholder="User Email" required/>
+        </div>
+        <div class="mb-3">
+          <label for="user_mobile" class="form-label">User Mobile Number</label>
+          <input type="tel" class="form-control" id="user_mobile" name="mobile" placeholder="User Mobile" required/>
+        </div>
+        <div class="mb-3">
+          <label for="profilePic" class="form-label">User Profile</label>
+          <input class="form-control" type="file" id="profilePic" name="profile" accept="image/*" required/>
+        </div>
+        <div class="mb-3">
+          <label for="user_password_l" class="form-label">Password</label>
+          <input type="password" class="form-control" id="user_password_l" name="password" placeholder="User Password" required/>
+        </div>
+        <button type="submit" class="btn btn-outline-primary" name="userSignup" value="True">Create</button>
+      </form>
+    </div>
+  
+    </div>
+  </div>
+</div>
+{% endblock body%}

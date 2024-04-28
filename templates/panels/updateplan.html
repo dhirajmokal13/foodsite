@@ -1,0 +1,210 @@
+{% extends 'base.html' %} 
+{% block title %}Update the plan{% endblock title %}
+{% load post_tags %}
+{% block body %}
+{% for i in datas %}
+{% rmsp i.sunday_meal as sun %}
+{% rmsp i.monday_meal as mon %}
+{% rmsp i.tuesday_meal as tue %}
+{% rmsp i.wednesday_meal as wed %}
+{% rmsp i.thursday_meal as thu %}
+{% rmsp i.friday_meal as fri %}
+{% rmsp i.saturday_meal as sat %}
+{% comment %} body start here {% endcomment %}
+<h2 class="mt-5 mb-4">Update The Plan</h2>
+{% comment %} form start here {% endcomment %}
+<form action="/updateplan/{{id}}" method="post">
+    {% csrf_token %}
+    <div class="container mb-3">
+        {% comment %} first row start here {% endcomment %}
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+                <label for="pname" class="form-label">Plan Name</label>
+                <input type="text" class="form-control" value="{{ i.pname }}" id="pname" name="pname" Placeholder="Enter Plane Name" required/>
+              </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+                <label for="cpweek" class="form-label">Cost Per Week</label>
+                <input type="number" class="form-control" value="{{ i.cpweek }}" id="cpweek" name="cpweek" Placeholder="Enter Cost Per Week for Meal" required/>
+              </div>
+          </div>
+          <div class="col-md-4">
+            <label for="inputState" class="form-label">Choose Food Type</label>
+            <select id="mealtype" class="form-select" name="mealtype">
+              <option value="veg" {% if i.mealtype is "veg" %}{{"selected"}} {% endif %}>Vegeterian</option>
+              <option value="nonveg" {% if i.mealtype == "nonveg" %} {{"selected"}}  {% endif %}>Non Vegeterian</option>
+            </select>
+          </div>
+        </div>
+        {% comment %} first row end here {% endcomment %}
+        <h5 class="mt-3 mb-4 text-success">Sunday</h5>
+        {% comment %} second row start here {% endcomment %}
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="sbf" class="form-label">Break Fast</label>
+                  <input type="text" class="form-control" value="{{sun.0}}" id="sbf" name="sbf" Placeholder="Sunday Break Fast" required/>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                  <label for="slunch" class="form-label">Lunch</label>
+                  <input type="text" class="form-control" value="{{sun.1}}" id="slunch" name="slunch" Placeholder="Sunday Lunch" required/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="sdinner" class="form-label">Dinner</label>
+                    <input type="text" class="form-control" value="{{sun.2}}" id="sdinner" name="sdinner" Placeholder="Sunday Dinner" required/>
+                  </div>
+            </div>
+          </div>
+        {% comment %} second row end here {% endcomment %}
+        <h5 class="mt-3 mb-4 text-success">Monday</h5>
+        {% comment %} third row start here {% endcomment %}
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="mbf" class="form-label">Break Fast</label>
+                  <input type="text" class="form-control" value="{{mon.0}}" id="mbf" name="mbf" Placeholder="Monday Break Fast" required/>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                  <label for="slunch" class="form-label">Lunch</label>
+                  <input type="text" class="form-control" value="{{mon.1}}" id="mlunch" name="mlunch" Placeholder="Monday Lunch" required/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="mdinner" class="form-label">Dinner</label>
+                    <input type="text" class="form-control" value="{{mon.2}}" id="mdinner" name="mdinner" Placeholder="Monday Dinner" required/>
+                  </div>
+            </div>
+          </div>
+        {% comment %} third row end here {% endcomment %}
+        <h5 class="mt-3 mb-4 text-success">Tuesday</h5>
+        {% comment %} fourth row start here {% endcomment %}
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="tbf" class="form-label">Break Fast</label>
+                  <input type="text" class="form-control" value="{{tue.0}}" id="tbf" name="tbf" Placeholder="Tuesday Break Fast" required/>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                  <label for="tlunch" class="form-label">Lunch</label>
+                  <input type="text" class="form-control" value="{{tue.1}}" id="tlunch" name="tlunch" Placeholder="Tuesday Lunch" required/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="tdinner" class="form-label">Dinner</label>
+                    <input type="text" class="form-control" value="{{tue.2}}" id="tdinner" name="tdinner" Placeholder="Tuesday Dinner" required/>
+                  </div>
+            </div>
+          </div>
+        {% comment %} fourth row end here {% endcomment %}
+        <h5 class="mt-3 mb-4 text-success">Wednesday</h5>
+        {% comment %} fifth row start here {% endcomment %}
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="wbf" class="form-label">Break Fast</label>
+                  <input type="text" class="form-control" value="{{wed.0}}" id="wbf" name="wbf" Placeholder="Wednesday Break Fast" required/>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                  <label for="wlunch" class="form-label">Lunch</label>
+                  <input type="text" class="form-control" value="{{wed.1}}" id="wlunch" name="wlunch" Placeholder="Wednesday Lunch" required/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="wdinner" class="form-label">Dinner</label>
+                    <input type="text" class="form-control" value="{{wed.2}}" id="wdinner" name="wdinner" Placeholder="Wednesday Dinner" required/>
+                  </div>
+            </div>
+          </div>
+        {% comment %} fifth row end here {% endcomment %}
+        <h5 class="mt-3 mb-4 text-success">Thursday</h5>
+        {% comment %} sisxth row start here {% endcomment %}
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="thbf" class="form-label">Break Fast</label>
+                  <input type="text" class="form-control" value="{{thu.0}}" id="thbf" name="thbf" Placeholder="Thursday Break Fast" required/>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                  <label for="thlunch" class="form-label">Lunch</label>
+                  <input type="text" class="form-control" value="{{thu.1}}" id="thlunch" name="thlunch" Placeholder="Thursday Lunch" required/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="thdinner" class="form-label">Dinner</label>
+                    <input type="text" class="form-control" value="{{thu.2}}" id="thdinner" name="thdinner" Placeholder="Thursday Dinner" required/>
+                  </div>
+            </div>
+          </div>
+        {% comment %} sisxth row end here {% endcomment %}
+        <h5 class="mt-3 mb-4 text-success">Friday</h5>
+        {% comment %} seven row start here {% endcomment %}
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="fbf" class="form-label">Break Fast</label>
+                  <input type="text" class="form-control" value="{{fri.0}}" id="fbf" name="fbf" Placeholder="Friday Break Fast" required/>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                  <label for="flunch" class="form-label">Lunch</label>
+                  <input type="text" class="form-control" value="{{fri.1}}" id="flunch" name="flunch" Placeholder="Friday Lunch" required/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="fdinner" class="form-label">Dinner</label>
+                    <input type="text" class="form-control" value="{{fri.2}}" id="fdinner" name="fdinner" Placeholder="Friday Dinner" required/>
+                  </div>
+            </div>
+          </div>
+        {% comment %} seven row end here {% endcomment %}
+        <h5 class="mt-3 mb-4 text-success">Saturday</h5>
+        {% comment %} eight start here {% endcomment %}
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                  <label for="stbf" class="form-label">Break Fast</label>
+                  <input type="text" class="form-control" value="{{sat.0}}" id="stbf" name="stbf" Placeholder="Saturday Break Fast" required/>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                  <label for="stlunch" class="form-label">Lunch</label>
+                  <input type="text" class="form-control" value="{{sat.1}}" id="stlunch" name="stlunch" Placeholder="Saturday Lunch" required/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="stdinner" class="form-label">Dinner</label>
+                    <input type="text" class="form-control" value="{{sat.2}}" id="stdinner" name="stdinner" Placeholder="Saturday Dinner" required/>
+                  </div>
+            </div>
+          </div>
+        {% comment %} eight end here {% endcomment %}
+        <button type="submit" name="planupdate" value="true" class="btn btn-outline-success">Update</button>
+        <button type="reset" class="btn btn-outline-success">Reset</button>
+      </div>
+    </form>
+{% endfor %}
+{% comment %} form end here {% endcomment %}
+{% comment %} body end here {% endcomment %}
+{% endblock body%}
